@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    
+    <link rel='stylesheet' href='/stylesheets/datepicker.css' />
+    
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="/stylesheets/bootstrap.css">
+
+	<!-- Optional theme 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+-->
+	<!-- Latest compiled and minified JavaScript -->
+	
+	 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-route.min.js"></script>
+
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+    
+    
+    <script src="/js/bootstrap-datepicker.js"></script>
+    
+  </head>
+  <body>
+   <div ng-app="" ng-controller="signInController" class="">
+ <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" style="margin-top:-25px;" ><img src="/images/linkedin_logo_11.jpg" width="140px" height="60px;" ></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      <!--   <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+       <li><a href="#">Profile</a></li> -->
+      <!--  <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li> -->
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+      <li>
+     
+      
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+        <label class="inputUsername" class="col-sm-2 control-label pull-top">Username:</label>
+          <input type="text" ng-model="username" class="form-control" name="username" id="username" placeholder="">
+    <label class="inputUsername" class="col-sm-2 control-label pull-left">Password:</label>
+    <input type="password" ng-model="password" name="password" id="password" class="form-control">   
+	
+        </div>
+          <button ng-click="signIn()" class="btn btn-primary">Sign in</button>
+      </form>
+      
+      </li>
+        
+      </ul>
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+ 
+  
+     <div  class="container">
+      <!-- Default panel contents -->
+        <!--<div class="panel-heading"></div> -->
+        <div class="jumbotron" style="box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15); margin-top:25px;">
+      <h2>Sign Up</h2>
+     <form class="form-horizontal" role="form">
+      <label class="inputUsername" class="col-sm-2 control-label pull-left">Username:</label>
+      <input type="text" ng-model="username1" class="form-control" name="username1" id="username1" placeholder="">
+      
+      <label class="inputPassword" class="col-sm-2 control-label pull-left">Password:</label>
+      <input type="password" ng-model="password1" name="password1" id="password1" class="form-control">
+      
+      <label class="inputUsername" class="col-sm-2 control-label pull-left">Email Id:</label>
+      <input type="email" ng-model="email" name="email" id="email" class="form-control">
+      
+      <label class="inputUsername" class="col-sm-2 control-label pull-left">First Name:</label>
+      <input type="text" ng-model="fname" name="fname" id="fname" class="form-control">
+      
+      <label class="inputUsername" class="col-sm-2 control-label pull-left">Last Name:</label>
+      <input type ="text" ng-model="lname" name="lname" id="lname" class="form-control">
+	  
+	  <br>
+	 
+	  <button ng-click="signUp()" class="btn btn-primary pull-right">Sign Up </button>
+      
+     </form>
+    </div>
+  </div>
+  </div> 
+    <script>
+    "use strict";
+    function signupController($scope, $http, $location){
+      
+      
+    }
+    
+    </script>
+    <script>
+	function signInController($scope,$http,$location) {
+	    
+		$scope.signIn = function() {
+	    	$http({
+	            method: 'POST',
+	            url: '/ulogin',
+	            data: { "username": $scope.username, "password": $scope.password }
+	            
+	         }).success(function(response){
+	           
+	            alert(JSON.stringify(response));
+	            
+	            if(response.signin == "Success")
+	           	{
+	           		window.location = '/profile';
+	           	
+	           	//alert("Great");
+	            }
+	            else
+	            {
+	            //	window.location = '/failLogin';
+	            alert("Try Again"); 
+	            }
+	        }).error(function(error){
+	            alert("error");
+	        });
+	    };
+	    
+	   $scope.signUp = function(){
+        $http({ 
+        
+         method:'POST',
+         url:'/signup',
+         data:{
+           "username": $scope.username1, 
+	            "password": $scope.password1, 
+	            "fname": $scope.fname,
+	            "lname": $scope.lname,
+	            "email":$scope.email
+         }
+        
+      }).success(function(response){
+          if(response.signup='Success')
+          {
+            window.location = '/signup2';
+            //alert('Success');
+          }
+          else
+          {
+            alert('Try Again');
+          }
+       }).error(function(error){
+       
+       });
+     };  
+	    
+	    
+	}
+	</script>
+  
+  </body>
+</html>

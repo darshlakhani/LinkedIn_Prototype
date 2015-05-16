@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    
+    <link rel='stylesheet' href='/stylesheets/datepicker.css' />
+    
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="/stylesheets/bootstrap.css">
+
+	<!-- Optional theme 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+-->
+	<!-- Latest compiled and minified JavaScript -->
+	
+	 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-route.min.js"></script>
+
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+    
+    
+    <script src="/js/bootstrap-datepicker.js"></script>
+    
+  <script>$('.datepicker').datepicker()</script>
+  </head>
+  <body>
+ <nav class="navbar navbar-default navbar-fixed-top"">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">LinkedIn</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Profile</a></li>
+        <!-- <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li> -->
+      </ul>
+      <!--<form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>-->
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Log Out</a></li>
+       <!-- <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+ 
+    
+     <div ng-app="" ng-controller="signupController" class="panel panel-primary">
+      <!-- Default panel contents -->
+        <div class="panel-heading"></div>
+        <div class="container">
+        <div class="jumbotron">
+        <h2>Sign Up</h2>
+     <form class="form-horizontal" role="form">
+      
+      <label class="inputUsername" class="col-sm-2 control-label pull-left">BirthDay:</label>
+  <div class="input-append date">
+   <input type="text" value="02-16-2012" class="datepicker" id="datepicker" name="birthday" ng-model="birthday">
+    <span class="add-on"><i class="icon-th"></i></span>
+</div>
+      
+      <label class="inputUsername" class="col-sm-2 control-label pull-left">Country:</label>
+      <input type="text" ng-model="country" class="form-control" name="country" id="username" placeholder="">
+      
+      <label class="inputUsername" class="col-sm-2 control-label pull-left">Zip:</label>
+      <input type="text" ng-model="zip" name="zip" id="password" class="form-control">
+      
+      <label class="inputUsername" class="col-sm-2 control-label pull-left">Contact:</label>
+      <input type="text" ng-model="contact" name="contact" id="email" class="form-control">
+      
+      <label class="inputUsername" class="col-sm-2 control-label pull-left">Marital Status:</label>
+      <input type="text" ng-model="marital" name="marital" id="fname" class="form-control">
+      
+	  <br>
+	  <button ng-click="signUp()" class="btn btn-primary">Sign Up </button>
+      
+     </form>
+    </div>
+    </div>
+  </div> 
+    <script>
+    "use strict";
+    function signupController($scope,$http,$location) {
+	    
+		$scope.signUp = function() {
+	    	$http({
+	            method: 'POST',
+	            url: '/signup2',
+	            data: { "birthday": $scope.birthday, 
+	            "country": $scope.country, 
+	            "zip": $scope.zip,
+	            "contact": $scope.contact,
+	            "marital":$scope.marital
+	             }
+	            
+	         }).success(function(response){
+	           
+	            //alert(JSON.stringify(response));
+	            
+	            if(response.signup2 == "Success")
+	           		window.location='/profile';
+	            else
+	            	alert("Fail");
+	        }).error(function(error){
+	            alert("error"+error);
+	        });
+	    };
+	}
+    
+    </script>
+      <script>$(document).ready(function() {
+    $('.datepicker').datepicker();
+});
+</script>
+	
+  </body>
+</html>

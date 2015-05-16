@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    
+    <link rel='stylesheet' href='/stylesheets/datepicker.css' />
+    
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="/stylesheets/bootstrap.css">
+	<link rel="stylesheet" href="/stylesheets/bootstrap-theme.css">
+	<link rel="stylesheet" href="/stylesheets/bootstrap-responsive.css">
+	<link rel="stylesheet" href="/stylesheets/xeditable.css">
+	<!-- Optional theme 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+-->
+	<!-- Latest compiled and minified JavaScript -->
+	
+	 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-route.min.js"></script>
+
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+    
+    
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="/js/xeditable.js"></script>
+
+</head>
+<body>
+<div ng-app="" ng-controller="conCtrl1" data-ng-init="init()">
+<nav class="navbar navbar-default navbar-fixed-top"">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">LinkedIn</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Connections<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/showcconnections">Connected</a></li>
+            <li><a href="/showconnections">Invitation</a></li>
+           </ul>
+          </li>
+          <li></li><li></li>
+           
+        <!-- <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li> -->
+      </ul>
+      <!--<form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>-->
+      <ul class="nav navbar-nav navbar-center">
+        <li>
+         <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+        <label class="inputUsername" class="col-sm-2 control-label pull-top"></label>
+          <input type="text" ng-model="searchtxt" class="form-control" name="searchtxt" id="searchtxt" placeholder="Search Member">
+     
+	
+        </div>
+          <button ng-click="search()"><span class="glyphicons glyphicons-search"><img src='/images/glyphicons-28-search.png'></span></button>
+      </form>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+       <li style="margin-top:15px"><span ng-model="fname" >{{fname}}</span> <span ng-model="lname">{{lname}}</span></li>
+        <li><a href="" ng-click="logout()">Log Out</a></li>
+       
+       
+       <!-- <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<h1> Invitations </h1>
+<div ng-repeat="conne1 in conne1">
+<div class="container">
+ <div class ="rows">
+  <div class="col-md-4">
+  <h3>{{conne1.f_name}} {{conne1.l_name}}</h3> 
+  </div>
+  <div class="col-md-2">
+   <div ng-if="conne1.status1=='Invited'"><button ng-click="Accept(conne1.username)" class="btn btn-primary">Accept</button>  <button ng-click="Decline(conne1.username)" class="btn btn-primary">Decline</button></div>
+  </div>
+ </div>
+</div><!-- end of container -->  
+</div>
+</div><!-- End of Controller1 -->
+
+
+<script>
+function conCtrl1($scope, $http,$location)
+{
+  $scope.init= function(){
+   $http({
+    method:"POST",
+    url:"/connectdet1",
+    
+   }).success(function(response){
+     $scope.conne1 = response.results;
+     $scope.fname = response.fname;
+     $scope.lname = response.lname;
+     console.log(response.lname);
+     
+     
+   }).error(function(error){
+   });
+  };
+
+
+  $scope.Accept= function(uname)
+  {
+    $http({
+      method:'POST',
+      url: '/updateconnect',
+      data: {
+       "status" : "Yes",
+       "uname" : uname
+      }
+    }).success(function(response){
+      window.location="/showcconnections"
+    }).error(function(response){
+    
+    });
+  };
+  
+  $scope.Decline= function(uname)
+  {
+    $http({
+      method:'POST',
+      url: '/updateconnect',
+      data : {
+       "status": "No",
+       "uname" : uname
+      }
+    }).success(function(response){
+    
+    }).error(function(error){
+    
+    });
+  };
+
+ $scope.search= function(){
+ 
+   var nameo = document.getElementById('searchtxt').value;
+   console.log(nameo);
+    //var name1 = nameo.split(" ");
+   document.location.href='/search?name='+nameo;
+    
+  
+  
+ 
+ 
+ }; // end of search 
+$scope.logout = function()
+ {
+  $http({
+    method:'GET',
+    url : '/logout'
+  
+  }).success(function(response){
+    if(response.logout == "Yes")
+    {
+      window.location = '/';
+    }
+  }).error(function(error){
+     console.log(error);
+  });
+ };
+
+}
+
+</script>
+<!--<script>
+/*function conCtrl3($scope, $http,$location)
+{
+  $scope.init= function(){
+   $http({
+    method:"POST",
+    url:"/connectdet3",
+    
+   }).success(function(response){
+     $scope.conne3 = response;
+   }).error(function(error){
+   });
+  };
+  
+}
+*/
+</script>-->
+
+</body>
+</html>
